@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.IntegerRes;
 import android.support.annotation.StringRes;
+import android.util.TypedValue;
 
 import com.google.gson.Gson;
 
@@ -135,6 +136,17 @@ public class Utils {
     }
 
 
+    public static final class DimenUtil{
+
+        public static int dp2px(float dp){
+            return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dp,AppUtil.resources().getDisplayMetrics()));
+        }
+
+        public static int sp2px(float sp){
+            return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,sp,AppUtil.resources().getDisplayMetrics()));
+        }
+
+    }
 
 
 
