@@ -13,6 +13,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -31,7 +32,6 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.7.0'
 
-    compile 'com.trello.rxlifecycle2:rxlifecycle-android:2.0.1'
     compile 'com.trello.rxlifecycle2:rxlifecycle-components:2.0.1'
 
     compile 'com.jakewharton:butterknife:8.5.1'
