@@ -32,4 +32,8 @@ public abstract class UserInfoManager{
         storeUserInfo(null);
     }
 
+    public static boolean isUserInfoEmpty(){
+        return Utils.SharePrefUtil.getPref(USER_INFO_PREF).getString(USER_INFO_JSON,null) == null;
+    }
+
 }

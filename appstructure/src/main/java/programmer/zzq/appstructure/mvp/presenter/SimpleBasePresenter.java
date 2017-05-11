@@ -6,12 +6,12 @@ import programmer.zzq.appstructure.mvp.contract.BaseContract;
 /**
  * Created by 朱志强 on 2017/4/14.
  */
-public abstract class BasePresenter<V extends BaseContract.IBaseMvpView, B extends BaseContract.IBaseBiz> implements BaseContract.IBasePresenter<V> {
+public abstract class SimpleBasePresenter<V extends BaseContract.IBaseMvpView, B extends BaseContract.IBaseBiz> implements BaseContract.IBasePresenter<V> {
 
     protected V mMvpView;
     protected B mBiz;
 
-    public BasePresenter() {
+    public SimpleBasePresenter() {
         mBiz = createBiz();
     }
 

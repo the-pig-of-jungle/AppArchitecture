@@ -8,17 +8,18 @@ import programmer.zzq.appstructure.utils.Utils;
  * Created by 朱志强 on 2017/4/29.
  */
 
-public abstract class SimpleBaseBiz<T> implements BaseContract.IBaseBiz<T> {
-    protected final T mRetrofitRequestService = Utils.HttpUtil.createRetrofitRequestService(retrofitInterface());
+public abstract  class SimpleBaseBiz<T> implements BaseContract.IBaseBiz{
 
-    public SimpleBaseBiz(){
+    protected final T mRetrofitRequestService = Utils.HttpUtil.createRetrofitRequestService(retrofitRequestInterface());
 
-    }
+    protected abstract Class<T> retrofitRequestInterface();
 
-    protected abstract Class<T> retrofitInterface();
+    @Override
+    public abstract boolean isBizSuccessful(int bizCode);
 
-    public T httpRequest(){
-        return mRetrofitRequestService;
+    @Override
+    public String getBizErrorTip(int bizErrorCode, String defaultMsg) {
+        return defaultMsg;
     }
 
 }

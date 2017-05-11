@@ -1,9 +1,6 @@
 package programmer.zzq.appstructure.mvp.contract;
 
 
-import com.trello.rxlifecycle2.LifecycleProvider;
-import com.trello.rxlifecycle2.android.ActivityEvent;
-
 import programmer.zzq.appstructure.mvp.model.biz.BizException;
 import programmer.zzq.appstructure.mvp.model.biz.BizSuccResult;
 
@@ -13,11 +10,14 @@ import programmer.zzq.appstructure.mvp.model.biz.BizSuccResult;
  */
 public interface BaseContract {
 
-    interface IBaseMvpView extends LifecycleProvider<ActivityEvent>{
+    interface IBaseMvpView {
 
         void onNoNetwork();
+
         void onNetworkChanged();
+
         void beforeLoading();
+
         void onLoading();
 
         void onBizSuccessful(BizSuccResult bizSuccResult);
@@ -37,12 +37,9 @@ public interface BaseContract {
 
     }
 
-    interface IBaseBiz<T> {
-
-        T httpRequestService();
-
+    interface IBaseBiz {
         boolean isBizSuccessful(int bizCode);
-
         String getBizErrorTip(int bizErrorCode, String defaultMsg);
     }
+
 }
