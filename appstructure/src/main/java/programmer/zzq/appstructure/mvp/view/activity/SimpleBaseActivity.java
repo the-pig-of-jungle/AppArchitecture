@@ -81,7 +81,6 @@ public abstract class SimpleBaseActivity<V extends BaseContract.IBaseMvpView,P e
         ActivityManager.pop();
     }
 
-
     public abstract P createPresenter();
 
 }

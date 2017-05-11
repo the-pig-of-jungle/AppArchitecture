@@ -1,7 +1,11 @@
 package programmer.zzq.appstructure.rxjava;
 
 
+import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.trello.rxlifecycle2.android.FragmentEvent;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -28,14 +32,14 @@ public class RxHelper {
     public static <T extends IResponseData<?>, B extends BaseContract.IBaseBiz> Observable<T> commonTransfer(Observable<T> observable, final B biz, final int bizTag, BaseContract.IBaseMvpView mvpView) {
         return observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .compose(mvpView.<T>bindUntilEvent(ActivityEvent.STOP))
+                .compose(RxHelper.<T>bindToLifecycle(mvpView))
                 .map(new Function<T, T>() {
                     @Override
                     public T apply(T t) throws Exception {
                         if (biz.isBizSuccessful(t.code())) {
                             return t;
                         }
-                        throw new BizException(bizTag, biz.getBizErrorTip(t.code(),t.message()), t);
+                        throw new BizException(bizTag, biz.getBizErrorTip(t.code(), t.message()), t);
                     }
                 });
     }
@@ -45,7 +49,7 @@ public class RxHelper {
         return new Observer<IResponseData<T>>() {
             @Override
             public void onSubscribe(Disposable d) {
-                if (!Utils.NetworkUtils.isNetworkConnected()){
+                if (!Utils.NetworkUtils.isNetworkConnected()) {
                     mvpView.onNoNetwork();
                     d.dispose();
                     return;
@@ -57,24 +61,24 @@ public class RxHelper {
             @Override
             public void onNext(IResponseData<T> value) {
 
-                mvpView.<T>onBizSuccessful(new BizSuccResult(bizTag,value));
+                mvpView.<T>onBizSuccessful(new BizSuccResult(bizTag, value));
             }
 
             @Override
             public void onError(Throwable e) {
                 Class ExType = e.getClass();
-                if (ExType == BizException.class){
+                if (ExType == BizException.class) {
                     mvpView.onBizError((BizException) e);
                     return;
                 }
 
                 String errorTip = "";
 
-                if (ExType == ConnectException.class){
+                if (ExType == ConnectException.class) {
                     errorTip = Utils.ResUtil.loadStringRes(R.string.connect_failed_tip);
-                }else if (ExType == SocketTimeoutException.class){
+                } else if (ExType == SocketTimeoutException.class) {
                     errorTip = Utils.ResUtil.loadStringRes(R.string.timeout_tip);
-                }else {
+                } else {
                     errorTip = Utils.ResUtil.loadStringRes(R.string.unknown_error_tip);
                 }
 
@@ -88,5 +92,23 @@ public class RxHelper {
         };
 
     }
+
+
+    public static <T> LifecycleTransformer<T> bindToLifecycle(BaseContract.IBaseMvpView mvpView) {
+
+        if (mvpView instanceof RxAppCompatActivity) {
+
+            return ((RxAppCompatActivity) mvpView).bindUntilEvent(ActivityEvent.DESTROY);
+
+        } else if (mvpView instanceof RxFragment) {
+
+            return ((RxFragment) mvpView).bindUntilEvent(FragmentEvent.DESTROY_VIEW);
+
+        } else {
+            return null;
+        }
+
+    }
+
 
 }

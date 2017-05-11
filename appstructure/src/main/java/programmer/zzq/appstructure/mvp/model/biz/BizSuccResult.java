@@ -4,11 +4,11 @@ package programmer.zzq.appstructure.mvp.model.biz;
  * Created by 朱志强 on 2017/4/29.
  */
 
-public class BizSuccResult<T> {
+public class BizSuccResult{
     private int mBizTag;
-    private T mResponseData;
+    private Object mResponseData;
 
-    public BizSuccResult(int bizTag, T responseData) {
+    public BizSuccResult(int bizTag, Object responseData) {
         mBizTag = bizTag;
         mResponseData = responseData;
     }
@@ -22,11 +22,11 @@ public class BizSuccResult<T> {
         mBizTag = bizTag;
     }
 
-    public T getResponseData() {
-        return mResponseData;
+    public <T> T getResponseData() {
+        return (T) mResponseData;
     }
 
-    public void setResponseData(T responseData) {
+    public void setResponseData(Object responseData) {
         mResponseData = responseData;
     }
 }
