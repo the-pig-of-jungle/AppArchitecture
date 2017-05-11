@@ -29,7 +29,7 @@ public abstract class SimpleBaseActivity<V extends BaseContract.IBaseMvpView,P e
             ViewGroup baseLayout = (ViewGroup) getLayoutInflater().inflate(baseLayout(), (ViewGroup) findViewById(android.R.id.content),false);
             getLayoutInflater().inflate(contentView(),baseLayout,true);
             setContentView(baseLayout);
-        }else {
+        }else if (contentView() != -1){
             setContentView(contentView());
         }
         ButterKnife.bind(this);
