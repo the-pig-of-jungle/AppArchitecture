@@ -45,6 +45,12 @@ public class Utils {
     public static final class AppUtil {
 
         public static Context context() {
+
+            if (BaseApplication.sApplication == null){
+                throw new IllegalStateException("你的应用的Application没有继承programmer.zzq.appstructure.app.BaseApplication,"
+                + "或者已经继承，但忘记在manifest文件中显示配置。");
+            }
+
             return BaseApplication.sApplication;
         }
 

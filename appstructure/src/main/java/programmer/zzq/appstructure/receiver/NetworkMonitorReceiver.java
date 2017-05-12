@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 
-import programmer.zzq.appstructure.mvp.contract.BaseContract;
+import com.orhanobut.logger.Logger;
+
+import programmer.zzq.appstructure.mvp.view.activity.SimpleBaseActivity;
 import programmer.zzq.appstructure.utils.Utils;
 
 
@@ -18,9 +20,11 @@ public class NetworkMonitorReceiver extends BroadcastReceiver {
 
     public static NetworkMonitorReceiver sReceiver;
     public static IntentFilter sIntentFilter;
+
     @Override
     public void onReceive(Context context, Intent intent) {
-        ((BaseContract.IBaseMvpView) context).onNetworkChanged(Utils.NetworkUtils.isNetworkConnected());
+        Logger.d("收到广播");
+        ((SimpleBaseActivity) context).receiveNetworkChangeBroadcast(Utils.NetworkUtils.isNetworkConnected());
     }
 
     public static void registerNetworkMonitor(Context context){

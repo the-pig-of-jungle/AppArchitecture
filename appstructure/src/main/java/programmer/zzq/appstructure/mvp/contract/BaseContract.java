@@ -27,6 +27,12 @@ public interface BaseContract {
         void onRequestFailed(String s);
     }
 
+    interface IBaseBiz {
+        boolean isBizSuccessful(int bizCode);
+        String getBizErrorTip(int bizErrorCode, String defaultMsg);
+    }
+
+
     interface IBasePresenter<V extends IBaseMvpView> {
 
         void attachView(V mvpView);
@@ -35,11 +41,6 @@ public interface BaseContract {
 
         V getMvpView();
 
-    }
-
-    interface IBaseBiz {
-        boolean isBizSuccessful(int bizCode);
-        String getBizErrorTip(int bizErrorCode, String defaultMsg);
     }
 
 }
