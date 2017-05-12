@@ -66,4 +66,6 @@ public abstract class BaseActivity<V extends BaseContract.IBaseMvpView,P extends
 
     @Override
     public abstract P createPresenter();
+
+
 }

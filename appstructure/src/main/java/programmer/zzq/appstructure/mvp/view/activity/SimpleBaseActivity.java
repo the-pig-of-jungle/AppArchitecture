@@ -24,10 +24,12 @@ public abstract class SimpleBaseActivity<V extends BaseContract.IBaseMvpView, P 
 
     private boolean mFirstReceive = true;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityManager.push(this);
+        processWindow();
         if (baseLayout() != -1) {
             ViewGroup baseLayout = (ViewGroup) getLayoutInflater().inflate(baseLayout(), (ViewGroup) findViewById(android.R.id.content), false);
             getLayoutInflater().inflate(contentView(), baseLayout, true);
@@ -36,9 +38,14 @@ public abstract class SimpleBaseActivity<V extends BaseContract.IBaseMvpView, P 
             setContentView(contentView());
         }
         ButterKnife.bind(this);
-        initDataAndEvent();
         mPresenter = createPresenter();
         mPresenter.attachView((V) this);
+
+        initDataAndEvent();
+
+    }
+
+    protected void processWindow() {
 
     }
 
