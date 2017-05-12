@@ -12,12 +12,19 @@ public class WelcomeActivity extends BaseActivity<WelcomeContract.IWelcomeView,W
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utils.ScreenUtil.fullScreen(this);
         mPresenter.toNextActivity();
     }
 
     @Override
     public WelcomeContract.IWelcomePresenter createPresenter() {
         return new WelcomePresenter();
+    }
+
+
+    @Override
+    protected void processWindow() {
+
     }
 
     @Override

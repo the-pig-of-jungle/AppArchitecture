@@ -8,7 +8,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.IntegerRes;
 import android.support.annotation.StringRes;
+import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
+import android.view.WindowManager;
 
 import com.google.gson.Gson;
 
@@ -47,7 +49,7 @@ public class Utils {
         public static Context context() {
 
             if (BaseApplication.sApplication == null){
-                throw new IllegalStateException("你的应用的Application没有继承programmer.zzq.appstructure.app.BaseApplication,"
+                throw new IllegalStateException("应用的Application没有继承programmer.zzq.appstructure.app.BaseApplication,"
                 + "或者已经继承，但忘记在manifest文件中显示配置。");
             }
 
@@ -175,4 +177,10 @@ public class Utils {
 
     }
 
+
+    public static final class ScreenUtil{
+        public static void fullScreen(AppCompatActivity activity){
+            activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
+    }
 }
