@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 
 import programmer.zzq.appstructure.mvp.contract.BaseContract;
+import programmer.zzq.appstructure.utils.Utils;
 
 
 /**
@@ -19,7 +20,7 @@ public class NetworkMonitorReceiver extends BroadcastReceiver {
     public static IntentFilter sIntentFilter;
     @Override
     public void onReceive(Context context, Intent intent) {
-        ((BaseContract.IBaseMvpView) context).onNetworkChanged();
+        ((BaseContract.IBaseMvpView) context).onNetworkChanged(Utils.NetworkUtils.isNetworkConnected());
     }
 
     public static void registerNetworkMonitor(Context context){

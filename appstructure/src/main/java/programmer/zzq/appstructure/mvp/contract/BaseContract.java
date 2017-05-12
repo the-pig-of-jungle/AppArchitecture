@@ -14,7 +14,7 @@ public interface BaseContract {
 
         void onNoNetwork();
 
-        void onNetworkChanged();
+        void onNetworkChanged(boolean connected);
 
         void beforeLoading();
 
