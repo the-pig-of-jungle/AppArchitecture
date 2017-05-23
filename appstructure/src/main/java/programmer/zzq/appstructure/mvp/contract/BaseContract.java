@@ -28,8 +28,10 @@ public interface BaseContract {
     }
 
     interface IBaseBiz {
+
         boolean isBizSuccessful(int bizCode);
         String getBizErrorTip(int bizErrorCode, String defaultMsg);
+
     }
 
 
