@@ -6,7 +6,7 @@ import programmer.zzq.appstructure.mvp.contract.BaseContract;
 /**
  * Created by 朱志强 on 2017/4/14.
  */
-public abstract class SimpleBasePresenter<V extends BaseContract.IBaseMvpView, B extends BaseContract.IBaseBiz> implements BaseContract.IBasePresenter<V> {
+public abstract class SimpleBasePresenter<V extends BaseContract.IBaseMvpView, B extends BaseContract.IBaseBiz> implements BaseContract.IBasePresenter{
 
     protected V mMvpView;
     protected B mBiz;
@@ -18,8 +18,8 @@ public abstract class SimpleBasePresenter<V extends BaseContract.IBaseMvpView, B
     protected abstract B createBiz();
 
     @Override
-    public void attachView(V mvpView) {
-        mMvpView = mvpView;
+    public void attachView(BaseContract.IBaseMvpView mvpView) {
+        mMvpView = (V) mvpView;
     }
 
     @Override
@@ -27,8 +27,7 @@ public abstract class SimpleBasePresenter<V extends BaseContract.IBaseMvpView, B
         mMvpView = null;
     }
 
-    @Override
-    public V getMvpView() {
-        return mMvpView;
-    }
+
+
+
 }

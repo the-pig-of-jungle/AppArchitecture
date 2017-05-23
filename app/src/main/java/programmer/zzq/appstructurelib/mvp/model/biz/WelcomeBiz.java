@@ -1,8 +1,6 @@
 package programmer.zzq.appstructurelib.mvp.model.biz;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
 import programmer.zzq.appstructure.manager.UserInfoManager;
 import programmer.zzq.appstructurelib.mvp.contract.WelcomeContract;
 
@@ -19,12 +17,6 @@ public class WelcomeBiz extends BaseBiz implements WelcomeContract.IWelcomeBiz{
 
     @Override
     public Observable<Boolean> hasLogined() {
-        return Observable.create(new ObservableOnSubscribe<Boolean>() {
-            @Override
-            public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
-                e.onNext(!UserInfoManager.isUserInfoEmpty());
-                e.onComplete();
-            }
-        });
+        return Observable.just(!UserInfoManager.isUserInfoEmpty());
     }
 }

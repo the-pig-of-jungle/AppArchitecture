@@ -8,8 +8,8 @@ import programmer.zzq.appstructure.utils.Utils;
  */
 public abstract class UserInfoManager{
 
-    public static final String USER_INFO_PREF = "user_info";
-    public static final String USER_INFO_JSON = "user_info_json";
+    private static final String USER_INFO_PREF = "user_info";
+    private static final String USER_INFO_JSON = "user_info_json";
 
     private static Object sUserInfo;
 

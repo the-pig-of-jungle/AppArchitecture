@@ -15,9 +15,6 @@ public interface WelcomeContract {
         void toHomePaneActivity();
 
         void toLoginActivity();
-
-        void endShow();
-
     }
 
     interface IWelcomeBiz extends BaseContract.IBaseBiz{
@@ -25,7 +22,7 @@ public interface WelcomeContract {
         Observable<Boolean> hasLogined();
     }
 
-    interface IWelcomePresenter extends BaseContract.IBasePresenter<IWelcomeView> {
+    interface IWelcomePresenter extends BaseContract.IBasePresenter {
         void toNextActivity();
     }
 }

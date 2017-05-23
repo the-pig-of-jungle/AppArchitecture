@@ -11,9 +11,9 @@ public class BizException extends RuntimeException {
 
     private int mBizTag;
     private String mDesc;
-    private IResponseData<?> mResponseData;
+    private IResponseData mResponseData;
 
-    public BizException(int bizTag, String desc, IResponseData<?> responseData) {
+    public BizException(int bizTag, String desc, IResponseData responseData) {
         mBizTag = bizTag;
         mDesc = desc;
         mResponseData = responseData;
@@ -40,10 +40,10 @@ public class BizException extends RuntimeException {
     }
 
     public <DATA> IResponseData<DATA> getResponseData() {
-        return (IResponseData<DATA>) mResponseData;
+        return mResponseData;
     }
 
-    public void setResponseData(IResponseData<?> responseData) {
+    public void setResponseData(IResponseData responseData) {
         mResponseData = responseData;
     }
 }

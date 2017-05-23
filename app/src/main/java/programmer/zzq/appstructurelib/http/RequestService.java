@@ -1,11 +1,10 @@
 package programmer.zzq.appstructurelib.http;
 
-import java.util.Map;
-
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 import programmer.zzq.appstructurelib.mvp.model.bean.UserInfo;
-import retrofit2.http.GET;
-import retrofit2.http.QueryMap;
+import retrofit2.http.Body;
+import retrofit2.http.POST;
 
 /**
  * Created by 朱志强 on 2017/5/12.
@@ -13,7 +12,7 @@ import retrofit2.http.QueryMap;
 
 public interface RequestService {
 
-    @GET("/api/StuffService/StuffLogin")
-    Observable<ResponseData<UserInfo>> login(@QueryMap Map<String,String> loginParam);
+    @POST("/api/StuffService/StuffLogin")
+    Observable<ResponseData<UserInfo>> login(@Body RequestBody jsonBody);
 
 }

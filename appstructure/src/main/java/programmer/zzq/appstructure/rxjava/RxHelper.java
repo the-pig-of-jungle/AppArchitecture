@@ -1,6 +1,7 @@
 package programmer.zzq.appstructure.rxjava;
 
 
+import com.orhanobut.logger.Logger;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.android.FragmentEvent;
@@ -11,6 +12,8 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.ObservableTransformer;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -29,24 +32,32 @@ import programmer.zzq.appstructure.utils.Utils;
  */
 public class RxHelper {
 
-    public static <T extends IResponseData<?>, B extends BaseContract.IBaseBiz> Observable<T> commonTransfer(Observable<T> observable, final B biz, final int bizTag, BaseContract.IBaseMvpView mvpView) {
-        return observable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .compose(RxHelper.<T>bindToLifecycle(mvpView))
-                .map(new Function<T, T>() {
-                    @Override
-                    public T apply(T t) throws Exception {
-                        if (biz.isBizSuccessful(t.code())) {
-                            return t;
-                        }
-                        throw new BizException(bizTag, biz.getBizErrorTip(t.code(), t.message()), t);
-                    }
-                });
+    public static <T extends IResponseData> ObservableTransformer<T,T> commonTransformer(final BaseContract.IBaseBiz biz, final int bizTag, final BaseContract.IBaseMvpView mvpView){
+        return new ObservableTransformer<T, T>() {
+            @Override
+            public ObservableSource<T> apply(Observable<T> upstream) {
+                return upstream.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .compose(RxHelper.<T>bindToLifecycle(mvpView))
+                        .map(new Function<T, T>() {
+                            @Override
+                            public T apply(T responseData) throws Exception {
+
+                                if (biz.isBizSuccessful(responseData.code())){
+                                    return responseData;
+                                }
+
+                                throw new BizException(bizTag,biz.getBizErrorTip(responseData.code(),responseData.message()),responseData);
+                            }
+                        });
+            }
+        };
     }
 
-    public static <T> Observer<IResponseData<T>> commonObserver(final BaseContract.IBaseMvpView mvpView, final int bizTag) {
 
-        return new Observer<IResponseData<T>>() {
+    public static <T extends IResponseData> Observer<T> commonObserver(final int bizTag,final BaseContract.IBaseMvpView mvpView) {
+
+        return new Observer<T>() {
             @Override
             public void onSubscribe(Disposable d) {
                 if (!Utils.NetworkUtils.isNetworkConnected()) {
@@ -59,13 +70,15 @@ public class RxHelper {
             }
 
             @Override
-            public void onNext(IResponseData<T> value) {
-
+            public void onNext(T value) {
+                Logger.d("成功");
                 mvpView.<T>onBizSuccessful(new BizSuccResult(bizTag, value));
             }
 
             @Override
             public void onError(Throwable e) {
+                Logger.d("失败！");
+                Logger.d(e);
                 Class ExType = e.getClass();
                 if (ExType == BizException.class) {
                     mvpView.onBizError((BizException) e);
@@ -94,7 +107,8 @@ public class RxHelper {
     }
 
 
-    public static <T> LifecycleTransformer<T> bindToLifecycle(BaseContract.IBaseMvpView mvpView) {
+
+    public static <T extends IResponseData> LifecycleTransformer<T> bindToLifecycle(BaseContract.IBaseMvpView mvpView) {
 
         if (mvpView instanceof RxAppCompatActivity) {
 
@@ -109,6 +123,7 @@ public class RxHelper {
         }
 
     }
+
 
 
 }

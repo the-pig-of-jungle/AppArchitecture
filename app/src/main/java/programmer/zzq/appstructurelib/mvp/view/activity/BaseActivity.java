@@ -3,8 +3,6 @@ package programmer.zzq.appstructurelib.mvp.view.activity;
 import android.app.ProgressDialog;
 import android.widget.Toast;
 
-import com.orhanobut.logger.Logger;
-
 import programmer.zzq.appstructure.mvp.contract.BaseContract;
 import programmer.zzq.appstructure.mvp.model.biz.BizException;
 import programmer.zzq.appstructure.mvp.model.biz.BizSuccResult;
@@ -14,7 +12,7 @@ import programmer.zzq.appstructure.mvp.view.activity.SimpleBaseActivity;
  * Created by 朱志强 on 2017/5/12.
  */
 
-public abstract class BaseActivity<V extends BaseContract.IBaseMvpView,P extends BaseContract.IBasePresenter<V>> extends SimpleBaseActivity<V,P> {
+public abstract class BaseActivity<P extends BaseContract.IBasePresenter> extends SimpleBaseActivity<P> {
 
 
     @Override
@@ -25,7 +23,6 @@ public abstract class BaseActivity<V extends BaseContract.IBaseMvpView,P extends
 
     @Override
     public void onNetworkChanged(boolean connected) {
-        Logger.d("base处理广播");
         Toast.makeText(this,connected ? "网络已恢复！" : "网络已断开！",Toast.LENGTH_SHORT).show();
     }
 

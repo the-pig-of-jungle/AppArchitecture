@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.ViewGroup;
 
-import com.orhanobut.logger.Logger;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import butterknife.ButterKnife;
@@ -18,7 +17,7 @@ import programmer.zzq.appstructure.receiver.NetworkMonitorReceiver;
 /**
  * Created by 朱志强 on 2017/4/14.
  */
-public abstract class SimpleBaseActivity<V extends BaseContract.IBaseMvpView, P extends BaseContract.IBasePresenter<V>> extends RxAppCompatActivity implements BaseContract.IBaseMvpView {
+public abstract class SimpleBaseActivity<P extends BaseContract.IBasePresenter> extends RxAppCompatActivity implements BaseContract.IBaseMvpView {
 
     protected P mPresenter;
 
@@ -39,7 +38,7 @@ public abstract class SimpleBaseActivity<V extends BaseContract.IBaseMvpView, P 
         }
         ButterKnife.bind(this);
         mPresenter = createPresenter();
-        mPresenter.attachView((V) this);
+        mPresenter.attachView(this);
 
         initDataAndEvent();
 
@@ -62,7 +61,6 @@ public abstract class SimpleBaseActivity<V extends BaseContract.IBaseMvpView, P 
     @Override
     protected void onResume() {
         super.onResume();
-        Logger.d("注册了");
         NetworkMonitorReceiver.registerNetworkMonitor(this);
     }
 
@@ -70,22 +68,14 @@ public abstract class SimpleBaseActivity<V extends BaseContract.IBaseMvpView, P 
     @Override
     protected void onPause() {
         super.onPause();
-        Logger.d("解除注册了");
         NetworkMonitorReceiver.unregisterNetworkMonitor(this);
     }
 
-    public final void receiveNetworkChangeBroadcast(boolean connected){
-        if (mFirstReceive){
-            mFirstReceive = false;
-            return;
-        }else {
-            onNetworkChanged(connected);
-        }
-    }
+
 
     @Override
     public void onNetworkChanged(boolean connected) {
-        Logger.d("activity处理广播");
+
     }
 
     @Override

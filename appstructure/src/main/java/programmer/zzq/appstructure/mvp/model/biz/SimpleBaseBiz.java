@@ -2,7 +2,7 @@ package programmer.zzq.appstructure.mvp.model.biz;
 
 
 import programmer.zzq.appstructure.mvp.contract.BaseContract;
-import programmer.zzq.appstructure.utils.Utils;
+import programmer.zzq.appstructure.tools.RetrofitTools;
 
 /**
  * Created by 朱志强 on 2017/4/29.
@@ -10,7 +10,7 @@ import programmer.zzq.appstructure.utils.Utils;
 
 public abstract  class SimpleBaseBiz<T> implements BaseContract.IBaseBiz{
 
-    protected final T mRetrofitRequestService = Utils.HttpUtil.createRetrofitRequestService(retrofitRequestInterface());
+    protected final T mRetrofitRequestService = RetrofitTools.createRetrofitRequestService(retrofitRequestInterface());
 
     protected abstract Class<T> retrofitRequestInterface();
 

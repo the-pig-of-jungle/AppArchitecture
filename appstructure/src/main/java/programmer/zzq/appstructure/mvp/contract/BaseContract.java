@@ -33,14 +33,11 @@ public interface BaseContract {
     }
 
 
-    interface IBasePresenter<V extends IBaseMvpView> {
+    interface IBasePresenter{
 
-        void attachView(V mvpView);
+        void attachView(IBaseMvpView mvpView);
 
         void detachView();
-
-        V getMvpView();
-
     }
 
 }

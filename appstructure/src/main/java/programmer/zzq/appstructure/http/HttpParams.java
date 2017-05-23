@@ -1,5 +1,7 @@
 package programmer.zzq.appstructure.http;
 
+import com.orhanobut.logger.Logger;
+
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -52,6 +54,7 @@ public class HttpParams extends HashMap<String,String>{
     }
 
     public String toJson(){
+        Logger.json(new JSONObject(this).toString());
         return new JSONObject(this).toString();
     }
 

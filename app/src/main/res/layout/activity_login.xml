@@ -1,10 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="programmer.zzq.appstructurelib.mvp.view.activity.LoginActivity"
-    android:background="#ff00ff">
+    android:id="@+id/root_code"
+    tools:context="programmer.zzq.appstructurelib.mvp.view.activity.LoginActivity">
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="登录"
+        android:textSize="15sp"
+        android:id="@+id/login_btn"
+        android:textColor="#ffffff"
+        android:background="@drawable/login_bg"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="错误提示"
+        android:textSize="14sp"
+        android:id="@+id/error_tip"
+        android:layout_centerHorizontal="true"
+        android:textColor="#cc0000"
+        android:layout_above="@id/login_btn"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        />
 
-</android.support.constraint.ConstraintLayout>
+
+
+    <View
+        android:id="@+id/pwd_line"
+        android:layout_above="@id/error_tip"
+        style="@style/login_line" />
+
+    <EditText
+        android:hint="请输入密码"
+        style="@style/login_edt"
+        android:id="@+id/pwd_edt"
+        android:drawableLeft="@drawable/login_password"
+        android:layout_above="@id/pwd_line"/>
+    <View
+        android:id="@+id/account_line"
+        android:layout_above="@id/pwd_edt"
+        style="@style/login_line" />
+
+    <EditText
+        android:hint="请输入账号"
+        style="@style/login_edt"
+        android:drawableLeft="@drawable/login_user"
+        android:layout_above="@id/account_line"
+        android:id="@+id/account_edt"
+        />
+
+</RelativeLayout>

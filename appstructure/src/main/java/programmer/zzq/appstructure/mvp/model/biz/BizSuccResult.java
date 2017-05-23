@@ -1,14 +1,16 @@
 package programmer.zzq.appstructure.mvp.model.biz;
 
+import programmer.zzq.appstructure.http.IResponseData;
+
 /**
  * Created by 朱志强 on 2017/4/29.
  */
 
 public class BizSuccResult{
     private int mBizTag;
-    private Object mResponseData;
+    private IResponseData mResponseData;
 
-    public BizSuccResult(int bizTag, Object responseData) {
+    public BizSuccResult(int bizTag, IResponseData responseData) {
         mBizTag = bizTag;
         mResponseData = responseData;
     }
@@ -22,11 +24,11 @@ public class BizSuccResult{
         mBizTag = bizTag;
     }
 
-    public <T> T getResponseData() {
-        return (T) mResponseData;
+    public <T> IResponseData<T> getResponseData(Class<T> dataType) {
+        return mResponseData;
     }
 
-    public void setResponseData(Object responseData) {
+    public void setResponseData(IResponseData responseData) {
         mResponseData = responseData;
     }
 }

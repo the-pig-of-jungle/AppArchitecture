@@ -7,12 +7,12 @@ import programmer.zzq.appstructurelib.R;
 import programmer.zzq.appstructurelib.mvp.contract.WelcomeContract;
 import programmer.zzq.appstructurelib.mvp.presenter.WelcomePresenter;
 
-public class WelcomeActivity extends BaseActivity<WelcomeContract.IWelcomeView,WelcomeContract.IWelcomePresenter> implements WelcomeContract.IWelcomeView{
+public class WelcomeActivity extends BaseActivity<WelcomeContract.IWelcomePresenter> implements WelcomeContract.IWelcomeView{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Utils.ScreenUtil.fullScreen(this);
+        showWelcomeImage();
         mPresenter.toNextActivity();
     }
 
@@ -24,7 +24,7 @@ public class WelcomeActivity extends BaseActivity<WelcomeContract.IWelcomeView,W
 
     @Override
     protected void processWindow() {
-
+        Utils.ScreenUtil.fullScreen(this);
     }
 
     @Override
@@ -35,17 +35,15 @@ public class WelcomeActivity extends BaseActivity<WelcomeContract.IWelcomeView,W
     @Override
     public void toHomePaneActivity() {
         Utils.IntentUtil.startActivity(this,HomeActivity.class);
+        finish();
     }
 
     @Override
     public void toLoginActivity() {
         Utils.IntentUtil.startActivity(this,LoginActivity.class);
-    }
-
-    @Override
-    public void endShow() {
         finish();
     }
+
 
     @Override
     protected int contentView() {

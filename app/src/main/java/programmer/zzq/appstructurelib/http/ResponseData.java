@@ -1,18 +1,19 @@
 package programmer.zzq.appstructurelib.http;
 
+
 import programmer.zzq.appstructure.http.IResponseData;
 
 /**
  * Created by 朱志强 on 2017/5/12.
  */
 
-public class ResponseData<DATA> implements IResponseData<DATA>{
-
+public class ResponseData<DATA> implements IResponseData<DATA> {
 
     private int ReturnCode;
     private String ReturnMsg;
     private DATA ReturnData;
     private int ReturnTotalRecords;
+
 
     public int getReturnCode() {
         return ReturnCode;
@@ -47,6 +48,7 @@ public class ResponseData<DATA> implements IResponseData<DATA>{
     }
 
 
+
     @Override
     public int code() {
         return getReturnCode();
@@ -61,6 +63,5 @@ public class ResponseData<DATA> implements IResponseData<DATA>{
     public DATA data() {
         return getReturnData();
     }
-
 
 }

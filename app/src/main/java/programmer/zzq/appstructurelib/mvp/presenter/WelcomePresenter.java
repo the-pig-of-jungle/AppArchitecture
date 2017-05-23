@@ -2,8 +2,7 @@ package programmer.zzq.appstructurelib.mvp.presenter;
 
 import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import programmer.zzq.appstructure.mvp.presenter.SimpleBasePresenter;
 import programmer.zzq.appstructurelib.mvp.contract.WelcomeContract;
 import programmer.zzq.appstructurelib.mvp.model.biz.WelcomeBiz;
@@ -22,32 +21,17 @@ public class WelcomePresenter extends SimpleBasePresenter<WelcomeContract.IWelco
 
     @Override
     public void toNextActivity() {
-
         mBiz.hasLogined()
-                .delay(1500, TimeUnit.MILLISECONDS).subscribe(new Observer<Boolean>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                mMvpView.showWelcomeImage();
-            }
-
-            @Override
-            public void onNext(Boolean value) {
-                if (value){
-                    mMvpView.toHomePaneActivity();
-                }else {
-                    mMvpView.toLoginActivity();
-                }
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-                mMvpView.endShow();
-            }
-        });
+                .delay(1500, TimeUnit.MILLISECONDS)
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) throws Exception {
+                        if (aBoolean){
+                            mMvpView.toHomePaneActivity();
+                        }else {
+                            mMvpView.toLoginActivity();
+                        }
+                    }
+                });
     }
 }
