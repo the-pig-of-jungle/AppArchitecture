@@ -20,7 +20,6 @@ public class SmartLogger implements HttpLoggingInterceptor.Logger{
             new JSONObject(message);
             Logger.json(message);
         } catch (JSONException e) {
-            e.printStackTrace();
             Logger.d(message);
         }
     }
