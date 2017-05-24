@@ -9,10 +9,12 @@ import programmer.zzq.appstructure.http.IResponseData;
 public class BizSuccResult{
     private int mBizTag;
     private IResponseData mResponseData;
+    private byte[] mSecretKey;
 
-    public BizSuccResult(int bizTag, IResponseData responseData) {
+    public BizSuccResult(int bizTag, IResponseData responseData,byte[] secretKey) {
         mBizTag = bizTag;
         mResponseData = responseData;
+        mSecretKey = secretKey;
     }
 
 
@@ -30,5 +32,13 @@ public class BizSuccResult{
 
     public void setResponseData(IResponseData responseData) {
         mResponseData = responseData;
+    }
+
+    public byte[] getSecretKey() {
+        return mSecretKey;
+    }
+
+    public void setSecretKey(byte[] mSecretKey) {
+        this.mSecretKey = mSecretKey;
     }
 }
