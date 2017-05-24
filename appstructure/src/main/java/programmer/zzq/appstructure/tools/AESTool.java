@@ -38,7 +38,7 @@ public class AESTool {
 
         if (sKeyGenerator == null){
             try {
-                sKeyGenerator = KeyGenerator.getInstance(sAlgorithm);
+                sKeyGenerator = KeyGenerator.getInstance("AES");
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }
@@ -81,33 +81,31 @@ public class AESTool {
 
 
 
-    public static byte[] decrypt(String encryptedData,String keyStr,boolean processKeyWithBase64){
-        byte[] decryptData = null;
-        byte[] key = processKeyWithBase64 ? Base64.decode(keyStr,Base64.DEFAULT) : keyStr.getBytes();
+    public static byte[] decrypt(String encryptedData,byte[] key){
+        byte[] decryptedData = null;
+        SecretKeySpec secretKeySpec = new SecretKeySpec(key,"AES");
         try {
-            SecretKeySpec secretKeySpec = new SecretKeySpec(key,"AES");
             Cipher cipher = Cipher.getInstance(sAlgorithm);
             cipher.init(Cipher.DECRYPT_MODE,secretKeySpec);
-            decryptData = cipher.doFinal(Base64.decode(encryptedData,Base64.DEFAULT));
+            decryptedData = cipher.doFinal(Base64.decode(encryptedData,Base64.DEFAULT));
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
             e.printStackTrace();
         } catch (BadPaddingException e) {
             e.printStackTrace();
         } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
         }
-
-        return decryptData;
+        return decryptedData;
     }
 
 
 
-    public static String decryptToString(String encryptData,String keyStr,boolean processKeyWithBase64){
-        return new String(decrypt(encryptData,keyStr,processKeyWithBase64));
+    public static String decryptToString(String encryptData,byte[] key){
+        return new String(decrypt(encryptData,key));
     }
 
 

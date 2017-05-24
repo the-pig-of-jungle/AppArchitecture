@@ -1,7 +1,6 @@
 package programmer.zzq.appstructure.rxjava;
 
 
-import com.orhanobut.logger.Logger;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.android.FragmentEvent;
@@ -71,15 +70,14 @@ public class RxHelper {
 
             @Override
             public void onNext(T value) {
-                Logger.d("成功");
                 mvpView.<T>onBizSuccessful(new BizSuccResult(bizTag, value));
             }
 
             @Override
             public void onError(Throwable e) {
-                Logger.d("失败！");
-                Logger.d(e);
+
                 Class ExType = e.getClass();
+
                 if (ExType == BizException.class) {
                     mvpView.onBizError((BizException) e);
                     return;
