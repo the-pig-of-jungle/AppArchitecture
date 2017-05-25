@@ -21,9 +21,6 @@ public abstract class SimpleBaseActivity<P extends BaseContract.IBasePresenter> 
 
     protected P mPresenter;
 
-    private boolean mFirstReceive = true;
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +36,6 @@ public abstract class SimpleBaseActivity<P extends BaseContract.IBasePresenter> 
         ButterKnife.bind(this);
         mPresenter = createPresenter();
         mPresenter.attachView(this);
-
         initDataAndEvent();
 
     }

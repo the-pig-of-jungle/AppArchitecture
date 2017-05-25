@@ -70,7 +70,7 @@ public class RxHelper {
 
             @Override
             public void onNext(T value) {
-                mvpView.<T>onBizSuccessful(new BizSuccResult(bizTag, value));
+                mvpView.<T>onBizSuccessful(new BizSuccResult(bizTag, value,null));
             }
 
             @Override
