@@ -5,4 +5,5 @@ package coder.zzq.appstructurelib.mvp.view.fragment;
  */
 
 public class SimpleBaseFragment {
+
 }
