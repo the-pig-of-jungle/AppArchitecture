@@ -37,6 +37,8 @@ public interface BaseContract {
 
         String getBizErrorTip(int bizErrorCode, String defaultMsg);
 
+        String getRequestFailedTip(Exception ex,String defaultMsg);
+
     }
 
 

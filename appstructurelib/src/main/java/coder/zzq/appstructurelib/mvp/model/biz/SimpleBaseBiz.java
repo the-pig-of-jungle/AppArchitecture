@@ -22,4 +22,8 @@ public abstract  class SimpleBaseBiz<T> implements BaseContract.IBaseBiz{
         return defaultMsg;
     }
 
+    @Override
+    public String getRequestFailedTip(Exception ex, String defaultMsg) {
+        return defaultMsg;
+    }
 }
