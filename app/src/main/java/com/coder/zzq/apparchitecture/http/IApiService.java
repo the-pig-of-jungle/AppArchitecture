@@ -1,10 +1,13 @@
 package com.coder.zzq.apparchitecture.http;
 
+import com.coder.zzq.apparchitecture.model.bean.LoginParams;
 import com.coder.zzq.apparchitecture.model.bean.UserInfo;
 
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
+import retrofit2.http.Body;
 import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
 
@@ -13,6 +16,5 @@ import retrofit2.http.QueryMap;
  */
 
 public interface IApiService {
-    @POST(ApiService.USER_LOGIN)
-    Observable<BaseResponse<UserInfo>> userLogin(@QueryMap Map<String,String> params);
+    
 }
