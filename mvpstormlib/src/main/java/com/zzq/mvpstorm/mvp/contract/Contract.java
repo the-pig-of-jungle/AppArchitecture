@@ -1,5 +1,7 @@
 package com.zzq.mvpstorm.mvp.contract;
 
+import io.reactivex.Observable;
+
 public interface Contract {
 
     interface IPresenter<V extends IView, B extends IBiz> {
