@@ -1,7 +1,8 @@
 package com.zzq.mvpstorm.mvp.view.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,69 +11,116 @@ import android.view.ViewGroup;
 
 import com.zzq.mvpstorm.mvp.contract.Contract;
 
-import javax.inject.Inject;
-
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.subjects.BehaviorSubject;
 
-public abstract class BaseMvpFragment<P extends Contract.IPresenter> extends Fragment implements Contract.IView<P> {
-    private Unbinder mUnbinder;
-    @Inject
-    private P mPresenter;
-
+public abstract class BaseMvpFragment<P extends Contract.IPresenter> extends Fragment
+        implements Contract.IMvpView<P> {
+    protected Unbinder mUnbinder;
+    protected P mPresenter;
+    protected BehaviorSubject<String> mLifecycleEmitter = BehaviorSubject.create();
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        retrieveArguments(getArguments());
+    public void onAttach(Context context) {
+        super.onAttach(context);
     }
 
-
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(getLayoutId(), container, false);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        extractArguments(getArguments());
+    }
+
+    protected void extractArguments(Bundle arguments) {
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(provideLayoutRes(), container, false);
         mUnbinder = ButterKnife.bind(this, view);
-        initView(view, savedInstanceState);
-        initData(savedInstanceState);
+        if (getP() != null) {
+            getP().attachView(this);
+        }
+        initView();
+        initData();
         return view;
     }
 
 
-    protected void retrieveArguments(Bundle arguments) {
+    @LayoutRes
+    protected abstract int provideLayoutRes();
 
+
+    protected abstract void initView();
+
+    protected abstract void initData();
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
-    protected abstract Integer getLayoutId();
-
-    protected void initView(View view, Bundle savedInstanceState) {
-
-    }
-
-
-    protected void initData(Bundle savedInstanceState) {
+    @Override
+    public void onStart() {
+        super.onStart();
 
     }
 
     @Override
-    public P getP() {
-        return mPresenter;
-    }
-
-    @Override
-    public void showLoading() {
+    public void onResume() {
+        super.onResume();
 
     }
 
     @Override
-    public void hideLoading() {
-
+    public void onPause() {
+        super.onPause();
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mUnbinder.unbind();
+        mLifecycleEmitter.onComplete();
+        if (mUnbinder != null) {
+            mUnbinder.unbind();
+        }
+        if (getP() != null) {
+            getP().detachView();
+            getP().onViewDestroyed();
+        }
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+
+    @Override
+    public P getP() {
+        if (mPresenter == null) {
+            mPresenter = createPresenter();
+        }
+        return mPresenter;
+    }
+
+    protected abstract P createPresenter();
+
+    @Override
+    public BehaviorSubject<String> getLifecycleEmitter() {
+        return mLifecycleEmitter;
     }
 }

@@ -1,20 +1,30 @@
 package com.zzq.mvpstorm.mvp.contract;
 
-import io.reactivex.Observable;
+import io.reactivex.subjects.BehaviorSubject;
 
 public interface Contract {
+    interface IMvpView<P extends IPresenter> {
+        P getP();
 
-    interface IPresenter<V extends IView, B extends IBiz> {
-        void attachView(V v);
-        void detachView();
-        V getV();
-        B getB();
+        void onLoading();
+
+        void onLoadFinish();
+
+        BehaviorSubject<String> getLifecycleEmitter();
     }
 
-    interface IView<P extends IPresenter> {
-        P getP();
-        void showLoading();
-        void hideLoading();
+    interface IPresenter<V extends IMvpView, B extends IBiz> {
+        void attachView(V view);
+
+        void detachView();
+
+        V getV();
+
+        boolean isViewAttached();
+
+        void onViewDestroyed();
+
+        B getB();
     }
 
     interface IBiz {
