@@ -25,5 +25,4 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     api 'com.github.limedroid:XDroidMvp:v2.0'
-    implementation 'com.github.the-pig-of-jungle.mvp-storm:basic:c1.0.9'
 }
