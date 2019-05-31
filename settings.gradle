@@ -1,1 +1,1 @@
-include ':app', ':BasicMvp', ':RxMvp', ':rxmvpdemo'
+include ':app', ':mvp', ':rxmvp', ':rxmvpdemo'
