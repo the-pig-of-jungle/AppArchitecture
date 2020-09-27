@@ -1,35 +1,25 @@
 package com.coder.zzq.mvp.contract;
 
-import io.reactivex.subjects.BehaviorSubject;
-
+@SuppressWarnings("rawtypes")
 public interface MvpContract {
-    interface MvpView<P extends MvpPresenter> {
+
+    interface IView<P extends IPresenter> {
         P getP();
 
-        void onLoading();
-
-        void onLoadComplete();
+        void showLoadingIndicator(boolean show);
     }
 
-    interface RxMvpView<P extends MvpPresenter> extends MvpView<P> {
-        BehaviorSubject<String> getSubscribeCancelTool();
-    }
-
-    interface MvpPresenter<V extends MvpView, B extends MvpBiz> {
+    interface IPresenter<V extends IView, B extends IBusiness> {
         void attachView(V view);
 
         void detachView();
 
         V getV();
 
-        boolean isViewAttached();
-
-        void onViewDestroyed();
-
         B getB();
     }
 
-    interface MvpBiz {
+    interface IBusiness {
 
     }
 }

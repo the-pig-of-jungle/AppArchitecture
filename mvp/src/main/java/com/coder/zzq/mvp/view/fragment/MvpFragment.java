@@ -2,12 +2,14 @@ package com.coder.zzq.mvp.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.LayoutRes;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.coder.zzq.mvp.contract.MvpContract;
 
@@ -15,8 +17,9 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.reactivex.subjects.BehaviorSubject;
 
-public abstract class MvpFragment<P extends MvpContract.MvpPresenter> extends Fragment
-        implements MvpContract.MvpView<P> {
+@SuppressWarnings("rawtypes")
+public abstract class MvpFragment<P extends MvpContract.IPresenter> extends Fragment
+        implements MvpContract.IView<P> {
     protected Unbinder mUnbinder;
     protected P mPresenter;
     protected BehaviorSubject<String> mLifecycleEmitter = BehaviorSubject.create();
@@ -46,6 +49,7 @@ public abstract class MvpFragment<P extends MvpContract.MvpPresenter> extends Fr
         }
         initView();
         initData();
+
         return view;
     }
 
@@ -94,7 +98,6 @@ public abstract class MvpFragment<P extends MvpContract.MvpPresenter> extends Fr
         }
         if (getP() != null) {
             getP().detachView();
-            getP().onViewDestroyed();
         }
 
     }
