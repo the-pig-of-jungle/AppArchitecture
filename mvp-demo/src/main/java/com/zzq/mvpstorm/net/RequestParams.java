@@ -2,13 +2,20 @@ package com.zzq.mvpstorm.net;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.internal.http.BridgeInterceptor;
 
 public final class RequestParams {
     public static final String CONTENT_TYPE_JSON = "Content-Type: application/json";
@@ -18,6 +25,15 @@ public final class RequestParams {
 
     private RequestParams() {
         mParams = new HashMap<>();
+        try {
+
+            new OkHttpClient.Builder()
+                    .build()
+                    .newCall(new Request.Builder().build())
+                    .execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
